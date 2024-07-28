@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.hoteltest{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.img{
+  width: 300px;
+}
+
