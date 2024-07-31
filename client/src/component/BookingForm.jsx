@@ -86,6 +86,8 @@ const BookingForm = () => {
       children,
       enfant,
       img,
+      checkIn,
+      checkOut,
       total
     })
     .then((res) => {
@@ -99,6 +101,7 @@ const BookingForm = () => {
         setEmail("");
         setNights("");
         setImg("");
+        localStorage.setItem('reservationId', res.data._id);
         navigate("/reservation/confirmation/done");
     })
     .catch(err=>{
@@ -166,7 +169,6 @@ const BookingForm = () => {
             <div className="hotel-header">
               <span className="hotel-name">{hotel.name}</span>
               <span className="hotel-rating">{hotel.rate}</span>
-              <a  className="edit-link">Edit</a>
             </div>
             <div className="hotel-location">{hotel.location}</div>
             <div className="check-in-out">
