@@ -76,10 +76,7 @@ const Register = () => {
                                         <input type="password" className="form-control" id="confirm-password" name="confirmPassword"  onChange={changeHandler} />
                                     </div>
                                     <button type="submit" className="btn btn-custom_sub btn-block w-100">Submit</button>
-                                    <button type="button" className="btn btn-custom_g btn-block w-100 mt-2">
-                                        <img src="/icons/google.png" alt="Icon" width="20" className="mr-2" />
-                                        Register with Google
-                                    </button>
+                                    
                                 </form>
                                 {error && <div className="alert alert-danger mt-3">{error.join(', ')}</div>}
                             </div>
