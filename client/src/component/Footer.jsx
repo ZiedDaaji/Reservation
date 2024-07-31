@@ -15,7 +15,7 @@ const Footer = () => {
                             <p className="mb-0">&copy; 2024 Reservation</p>
                             <a href="#">Terms</a>
                             <a href="#">Privacy</a>
-                            <a href="#">About Us</a>
+                            <a href="/aboutUs">About Us</a>
                         </div>
                         <div className="float-right">
                             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><img src={facebook} alt="Facebook" width="20" className="mx-2" /></a>

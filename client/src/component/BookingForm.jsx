@@ -21,7 +21,7 @@ const BookingForm = () => {
   const [phone, setPhone] = useState([]);//ok
   const [email, setEmail] = useState([]);//ok
   const [nights, setNights] = useState([]);//ok
-
+  const [img, setImg] = useState([]);
   const adults = Cookies.get('dataAdultd');//ok
   const children = Cookies.get('dataChildren');//ok
   const enfant = Cookies.get('dataInfant');//ok
@@ -57,6 +57,7 @@ const BookingForm = () => {
         setHotelName(res.data.name);
         setHotelPrice(res.data.price)
         setHotelLocation(res.data.location);
+        setImg(res.data.photo)
     })
     .catch((err) => {
         console.log(err)
@@ -84,6 +85,7 @@ const BookingForm = () => {
       adults,
       children,
       enfant,
+      img,
       total
     })
     .then((res) => {
@@ -96,6 +98,7 @@ const BookingForm = () => {
         setPhone("");
         setEmail("");
         setNights("");
+        setImg("");
         navigate("/reservation/confirmation/done");
     })
     .catch(err=>{
@@ -158,7 +161,7 @@ const BookingForm = () => {
           </form>
         </div>
         <div className="summary-container">
-          <img src= {hotel.photo} alt="Hotel" className="hotel-image" />
+          <img src= {img} alt="Hotel" className="hotel-image" />
           <div className="hotel-details">
             <div className="hotel-header">
               <span className="hotel-name">{hotel.name}</span>

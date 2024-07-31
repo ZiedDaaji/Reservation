@@ -80,7 +80,7 @@ const Navbar = () => {
                                 <option value="Sousse">EUR €</option>
                             </select>
                         </span>
-                        <a href="#" className="nav-link custom-margin p-0">About Us</a>
+                        <a href="/aboutUs" className="nav-link custom-margin p-0">About Us</a>
                         <Link to={`/Login`} ><button className="btn btn-outline-light ml-3 login-btn custom-margin" >
                             LogIn
                             <img src={user} alt="Icon" width="20" className="ml-2" />
@@ -92,7 +92,7 @@ const Navbar = () => {
                             {menuDropdownVisible && (
                                 <div className="dropdown-menu show">
                                     <a href="/homePage/profile" className="dropdown-item">Profile</a>
-                                    <a href="/homePage/profile" className="dropdown-item">My trips</a>
+                                    <a href="/dashbord" className="dropdown-item">My trips</a>
                                 </div>
                             )}
                         </div>

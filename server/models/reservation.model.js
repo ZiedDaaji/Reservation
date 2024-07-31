@@ -15,6 +15,7 @@ const ReservationSchema = new mongoose.Schema({
     enfant: {type: Number},
     checkIn: {type: String},
     checkOut: {type: String},
+    img: {type: String},
     total: {type: Number}
     }, {timestamps: true});
 

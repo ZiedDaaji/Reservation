@@ -68,9 +68,10 @@ const Dashboard = () => {
           if (email === booking.email) {
             return (
               <div className="hotel-card" key={booking._id}>
-                
+              <img src={booking.img}  className="hotel-image" />
               <div className="hotel-info">
                 <div className="hotel-name-rating">
+                  
                   <span className="hotel-name">{booking.hotelName}</span>
                   <span className="hotel-rating">{booking.hotelLocation}</span>
                 </div>

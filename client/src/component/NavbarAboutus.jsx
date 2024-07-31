@@ -70,7 +70,7 @@ const NavbarAboutus = () => {
                             <img src={smile} alt="Logo" width="30" className="mr-2" />
                             <Link to={`/homePage`} className='site-title' ><span >Reservation.com</span></Link>
                         </div>
-                        <span className="welcome-message">Welcome {userId}!</span>
+                        
                     </div>
                     <div className="d-flex align-items-center">
                         <span className="mr-3">
