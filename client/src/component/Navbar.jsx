@@ -92,7 +92,7 @@ const Navbar = () => {
                             {menuDropdownVisible && (
                                 <div className="dropdown-menu show">
                                     <a href="/homePage/profile" className="dropdown-item">Profile</a>
-                                    <a href="/homePage/profile" className="dropdown-item">My trips</a>
+                                    <a href="/dashbord" className="dropdown-item">My trips</a>
                                 </div>
                             )}
                         </div>
