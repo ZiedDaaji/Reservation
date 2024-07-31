@@ -10,6 +10,7 @@ import '../App.css'
 
 
 const Login = () => {
+    const [error, setError] = useState("");
     const [userLogin, setUserLogin] = useState({
         email:'',
         password:''
@@ -18,7 +19,7 @@ const Login = () => {
     const changeHandler = (e) => {
         setUserLogin({...userLogin, [e.target.name]:e.target.value }) 
     }
-    const [error, setError] = useState(null);
+
 
     const navigate = useNavigate();
 
@@ -35,10 +36,7 @@ const Login = () => {
                 navigate('/HomePage');
             })
             .catch(err => {
-                const errorResponse = err.response?.data?.errors || {};
-                const errorArr = Object.values(errorResponse).map(error => error.message);
-                setError(errorArr);
-                console.log(errorArr)
+                setError(err.response.data.message);
             });
     };
 
@@ -67,7 +65,7 @@ const Login = () => {
                                     </div>
                                     <button type="submit" className="btn btn-custom_sub btn-block w-100">Submit</button>
                                 </form>
-                                {error && <div className="alert alert-danger mt-3">{error.join(', ')}</div>}
+                                {error && <div className="alert alert-danger mt-3">{error}</div>}
                             </div>
                         </div>
                     </div>
