@@ -1,21 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import NavbarConnected from './NavbarConnected';
+import Cookies from 'js-cookie';
+import NavbarBooking from './NavbarBooking';
 
 const BookingForm = () => {
+  const [allUsers, setAllUsers] = useState([]);
   const { hotelId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { nights, adults, kids } = location.state;
+  
   const [hotel, setHotel] = useState([]);
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    gender: 'Mr',
-    phone: '',
-    email: '',
-  });
+
+
+  const [hotelLocation, setHotelLocation] = useState([]);//ok
+  const [hotelName, setHotelName] = useState([]);//ok
+  const [firstName, setFirstName] = useState([]);//ok
+  const [lastName, setLastName] = useState([]);//ok
+  const [civility, setCivility] = useState([]);//ok
+  const [phone, setPhone] = useState([]);//ok
+  const [email, setEmail] = useState([]);//ok
+  const [nights, setNights] = useState([]);//ok
+
+  const adults = Cookies.get('dataAdultd');//ok
+  const children = Cookies.get('dataChildren');//ok
+  const enfant = Cookies.get('dataInfant');//ok
+  const [checkIn, setCheckIn] = useState([]);
+  const [checkOut, setCheckOut] = useState([]);
+
+  const [dateIn, setDateIn] = useState([]);
+  const [dateOut, setDateOut] = useState([]);
+  const [hotelPrice, setHotelPrice] = useState([]);
+  const priceTot =  ((hotelPrice * adults) + (( hotelPrice / 2) * children))*nights
+  const badroom = 1 + (adults % 2)
+  const total = priceTot;
+
+  useEffect(() =>{
+    axios.get('http://localhost:8000/api/AllUsers', {withCredentials: true})
+    .then((res) => {
+        setAllUsers(res.data);
+
+    })
+    .catch((err) => {
+        console.log(err);
+        navigate('/Login');
+    })
+}, []);
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/hotels/" + hotelId)
@@ -23,6 +53,9 @@ const BookingForm = () => {
         console.log(res.data);
         console.log("ok")
         setHotel(res.data);
+        setHotelName(res.data.name);
+        setHotelPrice(res.data.price)
+        setHotelLocation(res.data.location);
     })
     .catch((err) => {
         console.log(err)
@@ -30,55 +63,51 @@ const BookingForm = () => {
     })
 }, [hotelId])
 
-  /*useEffect(() => {
-    fetchHotelDetails();
-  }, [hotelId]);
-
-  const fetchHotelDetails = () => {
-    fetch(`http://localhost:8000/api/Hotels/${hotelId}`)
-      .then(response => response.json())
-      .then(data => setHotel(data))
-      .catch(error => console.error('Error fetching hotel details:', error));
-  };*/
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const calculateTotalPrice = () => {
-    return (
-      nights * (300 + adults * 24 + kids * 15)
-    );
-  };
-
-  const handleConfirm = () => {
-    const booking = {
-      hotel,
-      nights,
-      adults,
-      kids,
-      totalPrice: calculateTotalPrice(),
-      formData,
-    };
-    const storedBookings = JSON.parse(localStorage.getItem('bookings')) || [];
-    storedBookings.push(booking);
-    localStorage.setItem('bookings', JSON.stringify(storedBookings));
-
-    navigate('/confirmation', { state: { hotel, nights, adults, kids } });
-  };
-
-  const handleEdit = () => {
-    navigate(`/editBooking/${hotelId}`, { state: { nights, adults, kids } });
-  };
-
   const handleCancel = () => {
     navigate(-1);
   };
 
+
+  const submitHandler = (e) => {
+    e.preventDefault();   
+    axios.post("http://localhost:8000/api/Reservations", {
+      hotelName,
+      hotelLocation,
+      firstName,
+      lastName,
+      civility,
+      phone,
+      email,
+      nights,
+      badroom,
+      adults,
+      children,
+      enfant,
+      total
+    })
+    .then((res) => {
+        console.log(res.data)
+        setHotelName("");
+        setHotelLocation("")
+        setFirstName("");
+        setLastName("");
+        setCivility("");
+        setPhone("");
+        setEmail("");
+        setNights("");
+        setCheckIn("");
+        setCheckOut("");
+
+
+        navigate("/reservation/confirmation/done");
+    })
+    .catch(err=>{
+      console.log(err.response.data.errors)
+    })
+  }
   return (
     <div className="home">
-      <NavbarConnected />
+      <NavbarBooking />
       <div className="booking-container">
         <div className="form-container">
           <form>
@@ -87,25 +116,23 @@ const BookingForm = () => {
               <input type="text"
               name="firstName"
               placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleChange} />
+              onChange={(e) => {setFirstName(e.target.value)}} value={firstName} />
             </div>
             <div className="form-group">
               <label>Family Name*</label>
               <input type="text"
               name="lastName"
               placeholder="Last Name"
-              value={formData.lastName}
-              onChange={handleChange} />
+              onChange={(e) => {setLastName(e.target.value)}} value={lastName} />
             </div>
             <div className="form-group">
               <label>Civility*</label>
               <div className="radio-group">
                 <select
                 name="gender"
-                value={formData.gender}
-                onChange={handleChange}
+                onChange={(e) => {setCivility(e.target.value)}} value={civility}
                 >
+                <option value="Mr">-</option>
                 <option value="Mr">Mr</option>
                 <option value="Mrs">Mrs</option>
               </select>
@@ -118,8 +145,7 @@ const BookingForm = () => {
                 <input type="text"
               name="phone"
               placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange} />
+              onChange={(e) => {setPhone(e.target.value)}} value={phone} />
               </div>
             </div>
             <div className="form-group">
@@ -127,11 +153,10 @@ const BookingForm = () => {
               <input ype="email"
               name="email"
               placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
+              onChange={(e) => {setEmail(e.target.value)}} value={email}
               required />
             </div>
-            <button type="submit" className="confirm-btn" onClick={handleConfirm}>Confirm</button>
+            <button type="submit" className="confirm-btn" onClick={submitHandler}>Confirm</button>
             <button type="submit" className="confirm-btn" onClick={handleCancel}>Cancel</button>
           </form>
         </div>
@@ -141,30 +166,34 @@ const BookingForm = () => {
             <div className="hotel-header">
               <span className="hotel-name">{hotel.name}</span>
               <span className="hotel-rating">{hotel.rate}</span>
-              <a onClick={handleEdit} className="edit-link">Edit</a>
+              <a  className="edit-link">Edit</a>
             </div>
             <div className="hotel-location">{hotel.location}</div>
             <div className="check-in-out">
               <div>
                 <strong>Check in</strong>
-                <p>Mon. 22 Jul</p>
+                <p>{checkIn}</p>
               </div>
               <div>
                 <strong>Check out</strong>
-                <p>Wed. 24 Jul</p>
+                <p>{checkOut}</p>
               </div>
             </div>
             <div className="stay-details">
-              <p>{nights} Nights | {adults} Adults</p>
-              <p> {adults} Adults | Kids: {kids} Kids</p>
+              <p><input ype="email"
+              name="nights"
+              onChange={(e) => {setNights(e.target.value)}} value={nights}
+              required /> Nights | {badroom} Badroom</p>
+              
+              <p> {adults} Adults | Kids:  {children}</p>
             </div>
             <div className="total">
               <strong>Total</strong>
-              <span>{calculateTotalPrice()} Dt</span>
+              <span>{priceTot} Dt</span>
             </div>
             <div className="payment-details">
               <p>Online Payment: 114 Dt</p>
-              <p>Hotel Payment: {calculateTotalPrice()} Dt</p>
+              <p>Hotel Payment:  {hotel.price} Dt</p>
             </div>
           </div>
         </div>

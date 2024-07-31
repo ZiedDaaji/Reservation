@@ -13,6 +13,7 @@ import axios from 'axios';
 const Navbar = () => {
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
+    const [location, setLocation] = useState(null);
     const navigate = useNavigate();
     const [whoDropdownVisible, setWhoDropdownVisible] = useState(false);
     const [menuDropdownVisible, setMenuDropdownVisible] = useState(false);
@@ -23,7 +24,7 @@ const Navbar = () => {
     });
     const userFN = Cookies.get('FN');
     const userLN = Cookies.get('LN');
-    const user = `${userFN + " " + userLN}`
+
 
     const toggleWhoDropdown = () => {
         setWhoDropdownVisible(!whoDropdownVisible);
@@ -47,19 +48,16 @@ const Navbar = () => {
         }));
     };
 
+    const cookieSet = () => {
+        Cookies.set('dataIn', (checkInDate), {expiresIn: '2h'});
+        Cookies.set('dataOut', (checkOutDate), {expiresIn: '2h'});
+        Cookies.set('dataLoc', (location), {expiresIn: '2h'});
+        Cookies.set('dataAdultd', (counts.adults), {expiresIn: '2h'});
+        Cookies.set('dataChildren', (counts.children), {expiresIn: '2h'});
+        Cookies.set('dataInfant', (counts.infants), {expiresIn: '2h'});
+        
+    };
 
-    const logOut = () => {
-        axios.post('http://localhost:8000/api/logout', {}, {withCredentials: true})
-        .then((res) => {
-            console.log(res);
-            Cookies.remove('FN');
-            Cookies.remove('LN');
-            navigate("/");
-        })
-        .catch((err) => {
-            console.log(err); 
-        })
-    }
 
     return (
         <header className="custom-header py-2">
@@ -68,7 +66,7 @@ const Navbar = () => {
                     <div className="d-flex flex-column align-items-start">
                         <div className="d-flex align-items-center">
                             <img src={smile} alt="Logo" width="30" className="mr-2" />
-                            <Link to={`/homePage`} ><span className='site-title' >Reservation.com</span></Link>
+                            <Link to={`/homePage`} className='site-title' ><span  >Reservation.com</span></Link>
                         </div>
                         <span className="welcome-message">Welcome Guest!</span>
                     </div>
@@ -104,8 +102,8 @@ const Navbar = () => {
                         <div className="search-bar-container">
                             <div className="search-bar">
                                 <div className="input-group">
-                                    <select className="form-control">
-                                        <option value="" disabled selected>Destination</option>
+                                    <select className="form-control" onChange={(e) => {setLocation(e.target.value)}}>
+                                        <option value="" disabled selected >Destination</option>
                                         <option value="Tunis">Tunis</option>
                                         <option value="Hammamet">Hammamet</option>
                                         <option value="Sousse">Sousse</option>
@@ -165,7 +163,7 @@ const Navbar = () => {
                                     )}
                                     <div className="input-group-append">
                                         <button className="btn btn-primary" type="button">
-                                            <img src={search} alt="Search"  />
+                                            <img src={search} alt="Search" onClick={() => cookieSet()} />
                                         </button>
                                     </div>
                                 </div>

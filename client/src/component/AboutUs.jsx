@@ -1,6 +1,7 @@
-import Navbar from './Navbar';
+
 import Footer from './Footer';
 import '../App.css'
+import NavbarAboutus from './NavbarAboutus';
 
 
 
@@ -9,7 +10,7 @@ const AboutUs = () => {
 
     return (
         <div className="d-flex flex-column min-vh-100">
-            <Navbar />
+            <NavbarAboutus />
             <div>
                 <h1>About Us</h1>
                 <p>Reservation is a groundbreaking hotel reservation platform designed to transform the way travelers </p>

@@ -17,24 +17,26 @@ const HotelsList = ({ nights, adults, kids }) => {
 }, []);
 
   const handleCheckPrice = (props) => {
-    navigate(`${props}/Reservation`, { state: { nights, adults, kids } });
+    navigate(`/homePage/${props}/Reservation`, { state: { nights, adults, kids } });
   };
 
   return (
     <div className="hotels-list">
       {hotels.map((hotel) => (
-        <div key={hotel.id} className="hotel-card">
-          <div className='photo'>
-            <img src = {hotel.photo} className='img' />
-            <img src = {hotel.photo2} className='img'/>
-            <img src = {hotel.photo3} className='img' />
+        
+        <div className="hotel-card" key={hotel.id}>
+          <img src={hotel.photo}  className="hotel-image" />
+          <div className="hotel-info">
+            <div className="hotel-name-rating">
+              <span className="hotel-name">{hotel.name}</span>
+              <span className="hotel-rating">{hotel.rate}</span>
+            </div>
+            <div className="hotel-location">{hotel.location}</div>
+            <button className="check-price-btn" onClick={() => handleCheckPrice(hotel._id)}>Check Price</button>
           </div>
-          <h2>{hotel.name}</h2>
-          <p>Rating: {hotel.rate}</p>
-          <p>Location: {hotel.location}</p>
-          <button onClick={() => handleCheckPrice(hotel._id)}>Check Price</button>
         </div>
       ))}
+      
     </div>
   );
 };

@@ -1,13 +1,40 @@
 import React, { useState, useEffect } from 'react';
+import {  useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import NavbarConnected from './NavbarConnected';
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const navigate = useNavigate();
+
+
+
+  useEffect(() =>{
+    axios.get('http://localhost:8000/api/AllUsers', {withCredentials: true})
+    .then((res) => {
+        setAllUsers(res.data);
+
+    })
+    .catch((err) => {
+        console.log(err);
+        navigate('/Login');
+    })
+}, []);
+
 
   useEffect(() => {
-    // Retrieve stored bookings from localStorage
-    const storedBookings = JSON.parse(localStorage.getItem('bookings')) || [];
-    setBookings(storedBookings);
-  }, []);
+    axios.get("http://localhost:8000/api/Reservations")
+    .then((res) => {
+        console.log(res.data);
+        console.log("ok")
+        setBookings(res.data);
+    })
+    .catch((err) => {
+        console.log(err)
+        console.log('nok')
+    })
+}, [])
 
   const handleDelete = (index) => {
     const updatedBookings = bookings.filter((_, i) => i !== index);
@@ -16,25 +43,33 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <h1>Previous Bookings</h1>
-      {bookings.length === 0 ? (
-        <p>No bookings found.</p>
-      ) : (
-        <ul>
-          {bookings.map((booking, index) => (
-            <li key={index}>
-              <h2>{booking.hotel.name}</h2>
-              <p>Location: {booking.hotel.location}</p>
-              <p>Nights: {booking.nights}</p>
-              <p>Adults: {booking.adults}</p>
-              <p>Kids: {booking.kids}</p>
-              <p>Total Price: {booking.totalPrice} DT</p>
-              <button onClick={() => handleDelete(index)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="home">
+      <NavbarConnected />
+      <div className="dashboard">
+        <h1>Previous Bookings</h1>
+        {bookings.length === 0 ? (
+          <p>No bookings found.</p>
+        ) : (
+          <ul>
+            {bookings.map((booking, index) => (
+              <div className="hotel-card" key={index}>
+                
+                <div className="hotel-info">
+                  <div className="hotel-name-rating">
+                    <span className="hotel-name">{booking.hotelName}</span>
+                    <span className="hotel-rating">{booking.hotelLocation}</span>
+                  </div>
+                  <div className="hotel-location">Nights: {booking.nights}</div>
+                  <div className="hotel-location">Adults: {booking.adults}</div>
+                  <div className="hotel-location">Kids: {booking.children}</div>
+                  <div className="hotel-location">Total Price: {booking.total} DT</div>
+                  <button className="check-price-btn" onClick={() => handleDelete(index)}>Delete</button>
+                </div>
+                </div>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

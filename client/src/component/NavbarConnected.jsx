@@ -50,12 +50,15 @@ const NavbarConnected = () => {
     };
 
     const cookieSet = () => {
-        Cookies.set('dataIn', (checkInDate), {expiresIn: '2h'});
+        let date1 = JSON.stringify(checkInDate);
+        Cookies.set('dataIn', date1);
+        
         Cookies.set('dataOut', (checkOutDate), {expiresIn: '2h'});
         Cookies.set('dataLoc', (location), {expiresIn: '2h'});
         Cookies.set('dataAdultd', (counts.adults), {expiresIn: '2h'});
         Cookies.set('dataChildren', (counts.children), {expiresIn: '2h'});
         Cookies.set('dataInfant', (counts.infants), {expiresIn: '2h'});
+        
     };
 
 
@@ -70,7 +73,8 @@ const NavbarConnected = () => {
             Cookies.remove('dataAdultd');
             Cookies.remove('dataChildren');
             Cookies.remove('dataInfant');
-            navigate("/");
+            Cookies.remove('dataLoc');
+            navigate("/homePage");
         })
         .catch((err) => {
             console.log(err); 
@@ -84,7 +88,7 @@ const NavbarConnected = () => {
                     <div className="d-flex flex-column align-items-start">
                         <div className="d-flex align-items-center">
                             <img src={smile} alt="Logo" width="30" className="mr-2" />
-                            <Link to={`/homePage`} ><span className='site-title' >Reservation.com</span></Link>
+                            <Link to={`/homePage`} className='site-title' ><span  >Reservation.com</span></Link>
                         </div>
                         <span className="welcome-message">Welcome {userId}!</span>
                     </div>
@@ -109,7 +113,7 @@ const NavbarConnected = () => {
                             {menuDropdownVisible && (
                                 <div className="dropdown-menu show">
                                     <a href="/homePage/Profile" className="dropdown-item">Profile</a>
-                                    <a href="/my-trips" className="dropdown-item">My trips</a>
+                                    <a href="/dashbord" className="dropdown-item">My trips</a>
                                 </div>
                             )}
                         </div>

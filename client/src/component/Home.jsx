@@ -20,7 +20,7 @@ const Home = () => {
         </video>
       </div>
       <div className="hotels-recommendations">
-        <HotelsList  />
+        <HotelsList />
       </div>
       <Footer />
     </div>

@@ -1,25 +1,52 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import {  useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import NavbarConfirm from './NavbarConfirm';
 
 const Confirmation = () => {
-  const location = useLocation();
-  const { hotel, nights, adults, kids } = location.state;
+  const { id } = useParams();
+  const [booking, setBooking] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const navigate = useNavigate();
 
-  const calculateTotalPrice = () => {
-    return nights * (300 + adults * 24 + kids * 15);
-  };
+  useEffect(() =>{
+    axios.get('http://localhost:8000/api/AllUsers', {withCredentials: true})
+    .then((res) => {
+        setAllUsers(res.data);
+
+    })
+    .catch((err) => {
+        console.log(err);
+        navigate('/Login');
+    })
+}, []);
+
+
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/Reservations/" + id)
+    .then((res) => {
+        console.log(res.data);
+        console.log("ok")
+        setBooking(res.data);
+    })
+    .catch((err) => {
+        console.log(err)
+        console.log('nok')
+    })
+}, [])
 
   return (
-    <div className="confirmation">
-      <h1>Paid Successfully</h1>
-      <p>Thank you for using our website</p>
-      <div className="hotel-details">
-        <h2>Booking Details for {hotel.name}</h2>
-        <p>Location: {hotel.location}</p>
-        <p>Nights: {nights}</p>
-        <p>Adults: {adults}</p>
-        <p>Kids: {kids}</p>
-        <p>Total Price: {calculateTotalPrice()} DT</p>
+    <div className="home">
+      <NavbarConfirm /> 
+      <div className="confirmation-container">
+        <div className="confirmation-message">
+          <h2>Paid Successfully!</h2>
+          <p>Thank you for using our website</p>
+          <button className="cancel-btn">Cancel Reservation</button>
+        </div>
+      
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ function App() {
             <Route path='/homePage/Profile' element={<EditProfile/>} />
             <Route path='/homePage' element={<HomePage/>}></Route>
             <Route path='/homePage/:hotelId/Reservation' element={<BookingForm/>} />
-            <Route path=':HotelId/reservation/confirmation/done' element={<Confirmation/>} />
+            <Route path='/reservation/confirmation/done' element={<Confirmation/>} />
             <Route path='/editBooking/:hotelId' element={<EditBooking/>} />
             <Route path='/dashbord' element={<Dashbord />} />
             <Route path='/aboutUs' element={<AboutUs/>} />
