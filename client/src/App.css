@@ -46,4 +46,501 @@
 .img{
   width: 300px;
 }
+/*copie style.css Aziz
+*/
 
+.custom-header {
+    background-color: #497697;
+    color: white;
+}
+
+.custom-header img {
+    border-radius: 50%;
+    background-color: white;
+}
+
+.custom-header .nav-link {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.custom-header .btn-primary,
+.custom-header .btn-outline-light {
+    background-color: #497697;
+    border-color: #497697;
+}
+
+.custom-header .btn-outline-light {
+    color: white;
+    border-width: 2px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-header .btn-outline-light:hover {
+    background-color: white;
+    color: #497697;
+}
+
+.custom-header .search-bar .form-control::placeholder {
+    color: #555;
+}
+
+.custom-header .search-bar .input-group .form-control {
+    border-right: 0;
+}
+
+.custom-header .search-bar .input-group .input-group-append .btn {
+    border-left: 0;
+}
+
+.footer {
+    background-color: #a0c0c9;
+    color: #000;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer_cl {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer_clr {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.btn-custom_sub {
+    background-color: #497697;
+    border-color: #497697;
+    color: white;
+}
+
+.btn-custom_g {
+    background-color: #9cc5e2;
+    border-color: #9cc5e2;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+.custom-header .search-bar {
+    margin-top: 15px;
+}
+
+.custom-margin {
+    margin-left: 2rem; 
+}
+
+
+.custom-header .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+}
+
+.custom-header .dropdown-menu.show {
+    display: block;
+    left: auto;
+    right: 0;
+    transform: translateX(0);
+}
+
+.custom-header .dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-header .dropdown-item small {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.custom-header .dropdown-item .btn {
+    padding: 0 10px;
+    margin: 0 5px;
+}
+
+.custom-header .search-bar .input-group {
+    position: relative;
+}
+
+.custom-header .search-bar .input-group .form-control {
+    cursor: pointer;
+}
+
+.custom-header .search-bar-container {
+    background-color: white;
+    border: 1px solid #497697;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px; 
+    max-width: 900px; 
+    margin: 0 auto; 
+}
+
+
+.custom-header .search-bar .form-control {
+    border-radius: 4px;
+    margin-right: 8px;
+    font-weight: bold; 
+    border: none; 
+}
+
+
+.custom-header .search-bar .input-group-append .btn {
+    background-color: white; 
+    color: #497697;
+    border-radius: 0 4px 4px 0;
+    font-weight: bold; 
+    border: none; 
+    box-shadow: none; 
+}
+
+
+.custom-header .search-bar .input-group-append .btn img {
+    width: 20px; 
+    height: auto;
+}
+
+
+.custom-header .dropdown-item .btn {
+    font-weight: bold; 
+    border: none; 
+    box-shadow: none; 
+}
+
+.custom-header .search-bar .input-group-append .btn:hover {
+    background-color: white;
+    color: #497697;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+.welcome-message {
+    font-size: 1.2rem; 
+    font-weight: bold; 
+    color: white;
+    margin-top: 5px; 
+}
+
+.site-title {
+    font-size: 1.5rem; 
+    font-weight: bold;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    margin: 0 10px; 
+}
+
+.step-icon {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    color: #497697;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.step-line {
+    width: 200px; 
+    height: 2px;
+    background-color: white;
+    margin: 0 10px;
+}
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.custom-header {
+  background-color: #497697;
+  color: white;
+}
+.custom-header img {
+  border-radius: 50%;
+  background-color: white;
+}
+.custom-header .nav-link {
+  color: white;
+  font-size: 0.9rem;
+}
+.footer {
+  background-color: #a0c0c9;
+  color: #000;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer_cl{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer_clr{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.btn-custom_sub {
+  background-color: #497697;
+  border-color: #497697;
+  color: white;
+}
+
+.btn-custom_g {
+  background-color: #9cc5e2;
+  border-color: #9cc5e2;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.container {
+  flex: 1;
+}
+
+
+/* BookingForm.css */
+
+.booking-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.form-container, .summary-container {
+  width: 48%;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"], 
+.form-group input[type="email"] {
+  width: calc(100% - 12px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.radio-group label {
+  margin-right: 20px;
+}
+
+.phone-input {
+  display: flex;
+  align-items: center;
+}
+
+.phone-input span {
+  margin-right: 10px;
+}
+
+.confirm-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-btn:hover {
+  background-color: #0056b3;
+}
+
+.hotel-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.hotel-details {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.hotel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hotel-name {
+  font-weight: bold;
+}
+
+.hotel-rating {
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.edit-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.check-in-out {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.check-in-out div {
+  width: 48%;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.payment-details p {
+  margin: 5px 0;
+}

@@ -72,3 +72,24 @@ module.exports.deleteUser = (req, res) => {
     .catch((err) => console.log(err))
 };
 
+module.exports.updateUser = (req, res) => {
+    User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+        runValidators: true,
+    })
+        .then((updatedUser) => {
+        res.json(updatedUser);
+        })
+        .catch((err) => res.status(400).json(err));
+    };
+
+    module.exports.updateUser = (req, res) => {
+        User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+            new: true,
+            runValidators: true,
+        })
+            .then((updatedUser) => {
+            res.json(updatedUser);
+            })
+            .catch((err) => res.status(400).json(err));
+        };
