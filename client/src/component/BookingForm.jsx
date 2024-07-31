@@ -25,8 +25,9 @@ const BookingForm = () => {
   const adults = Cookies.get('dataAdultd');//ok
   const children = Cookies.get('dataChildren');//ok
   const enfant = Cookies.get('dataInfant');//ok
-  const [checkIn, setCheckIn] = useState([]);
-  const [checkOut, setCheckOut] = useState([]);
+  const checkIn = Cookies.get('dataIn')
+  const checkOut = Cookies.get('dataOut')
+
 
   const [dateIn, setDateIn] = useState([]);
   const [dateOut, setDateOut] = useState([]);
@@ -95,10 +96,6 @@ const BookingForm = () => {
         setPhone("");
         setEmail("");
         setNights("");
-        setCheckIn("");
-        setCheckOut("");
-
-
         navigate("/reservation/confirmation/done");
     })
     .catch(err=>{
@@ -132,9 +129,9 @@ const BookingForm = () => {
                 name="gender"
                 onChange={(e) => {setCivility(e.target.value)}} value={civility}
                 >
-                <option value="Mr">-</option>
-                <option value="Mr">Mr</option>
+                <option>-</option>
                 <option value="Mrs">Mrs</option>
+                <option value="Mr">Mr</option>
               </select>
               </div>
             </div>

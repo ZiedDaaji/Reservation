@@ -59,23 +59,7 @@ const NavbarAboutus = () => {
     };
 
 
-    const logOut = () => {
-        axios.post('http://localhost:8000/api/logout', {}, {withCredentials: true})
-        .then((res) => {
-            console.log(res);
-            Cookies.remove('FN');
-            Cookies.remove('LN');
-            Cookies.remove('dataIn');
-            Cookies.remove('dataOut');
-            Cookies.remove('dataAdultd');
-            Cookies.remove('dataChildren');
-            Cookies.remove('dataInfant');
-            navigate("/");
-        })
-        .catch((err) => {
-            console.log(err); 
-        })
-    }
+    
 
     return (
         <header className="custom-header py-2">
@@ -106,7 +90,7 @@ const NavbarAboutus = () => {
                             {menuDropdownVisible && (
                                 <div className="dropdown-menu show">
                                     <a href="/homePage/Profile" className="dropdown-item">Profile</a>
-                                    <a href="/my-trips" className="dropdown-item">My trips</a>
+                                    <a href="/dashbord" className="dropdown-item">My trips</a>
                                 </div>
                             )}
                         </div>

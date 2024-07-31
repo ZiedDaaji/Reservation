@@ -55,6 +55,7 @@ const Navbar = () => {
         Cookies.set('dataAdultd', (counts.adults), {expiresIn: '2h'});
         Cookies.set('dataChildren', (counts.children), {expiresIn: '2h'});
         Cookies.set('dataInfant', (counts.infants), {expiresIn: '2h'});
+        navigate('/')
         
     };
 
@@ -104,6 +105,7 @@ const Navbar = () => {
                                 <div className="input-group">
                                     <select className="form-control" onChange={(e) => {setLocation(e.target.value)}}>
                                         <option value="" disabled selected >Destination</option>
+                                        <option value="All">All</option>
                                         <option value="Tunis">Tunis</option>
                                         <option value="Hammamet">Hammamet</option>
                                         <option value="Sousse">Sousse</option>
@@ -112,18 +114,8 @@ const Navbar = () => {
                                         <option value="Djerba">Djerba</option>
                                         <option value="Tabarka">Tabarka</option>
                                     </select>
-                                    <DatePicker
-                                        selected={checkInDate}
-                                        onChange={date => setCheckInDate(date)}
-                                        className="form-control"
-                                        placeholderText="Check In"
-                                    />
-                                    <DatePicker
-                                        selected={checkOutDate}
-                                        onChange={date => setCheckOutDate(date)}
-                                        className="form-control"
-                                        placeholderText="Check Out"
-                                    />
+                                    <div className='dateItem'>Check In<input type='date' className="form-control"  onChange={(e) => setCheckInDate(e.target.value)} placeholder="Check In" /></div>
+                                    <div className='dateItem'>Check Out<input type='date' className="form-control"  onChange={(e) => setCheckOutDate(e.target.value)} placeholder="Check Out" /></div>
                                     <div className="form-control" onClick={toggleWhoDropdown} style={{ cursor: 'pointer' }}>
                                         Who
                                     </div>

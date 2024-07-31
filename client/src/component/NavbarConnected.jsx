@@ -24,6 +24,7 @@ const NavbarConnected = () => {
     });
     const userFN = Cookies.get('FN');
     const userLN = Cookies.get('LN');
+    const id = Cookies.get('id');
     const userId = `${userFN + " " + userLN}`
 
 
@@ -50,14 +51,14 @@ const NavbarConnected = () => {
     };
 
     const cookieSet = () => {
-        let date1 = JSON.stringify(checkInDate);
-        Cookies.set('dataIn', date1);
         
+        Cookies.set('dataIn', (checkInDate), {expiresIn: '2h'});
         Cookies.set('dataOut', (checkOutDate), {expiresIn: '2h'});
         Cookies.set('dataLoc', (location), {expiresIn: '2h'});
         Cookies.set('dataAdultd', (counts.adults), {expiresIn: '2h'});
         Cookies.set('dataChildren', (counts.children), {expiresIn: '2h'});
         Cookies.set('dataInfant', (counts.infants), {expiresIn: '2h'});
+        navigate('/homePage')
         
     };
 
@@ -74,7 +75,9 @@ const NavbarConnected = () => {
             Cookies.remove('dataChildren');
             Cookies.remove('dataInfant');
             Cookies.remove('dataLoc');
-            navigate("/homePage");
+            Cookies.remove('id');
+            Cookies.remove('email');
+            navigate("/");
         })
         .catch((err) => {
             console.log(err); 
@@ -112,7 +115,7 @@ const NavbarConnected = () => {
                             </button>
                             {menuDropdownVisible && (
                                 <div className="dropdown-menu show">
-                                    <a href="/homePage/Profile" className="dropdown-item">Profile</a>
+                                    <a href={`/homePage/Profile/${id}`} className="dropdown-item">Profile</a>
                                     <a href="/dashbord" className="dropdown-item">My trips</a>
                                 </div>
                             )}
@@ -126,6 +129,7 @@ const NavbarConnected = () => {
                                 <div className="input-group">
                                     <select className="form-control" onChange={(e) => {setLocation(e.target.value)}}>
                                         <option value="" disabled selected>Destination</option>
+                                        <option value="All">All</option>
                                         <option value="Tunis">Tunis</option>
                                         <option value="Hammamet">Hammamet</option>
                                         <option value="Sousse">Sousse</option>
@@ -134,18 +138,8 @@ const NavbarConnected = () => {
                                         <option value="Djerba">Djerba</option>
                                         <option value="Tabarka">Tabarka</option>
                                     </select>
-                                    <DatePicker
-                                        selected={checkInDate}
-                                        onChange={date => setCheckInDate(date)}
-                                        className="form-control"
-                                        placeholderText="Check In"
-                                    />
-                                    <DatePicker
-                                        selected={checkOutDate}
-                                        onChange={date => setCheckOutDate(date)}
-                                        className="form-control"
-                                        placeholderText="Check Out"
-                                    />
+                                    <div className='dateItem'>Check In<input type='date' className="form-control"  onChange={(e) => setCheckInDate(e.target.value)} placeholder="Check In" /></div>
+                                    <div className='dateItem'>Check Out<input type='date' className="form-control"  onChange={(e) => setCheckOutDate(e.target.value)} placeholder="Check Out" /></div>
                                     <div className="form-control" onClick={toggleWhoDropdown} style={{ cursor: 'pointer' }}>
                                         Who
                                     </div>

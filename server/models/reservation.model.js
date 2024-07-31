@@ -13,8 +13,8 @@ const ReservationSchema = new mongoose.Schema({
     adults: {type: Number},
     children: {type: Number},
     enfant: {type: Number},
-    checkIn: {type: Date},
-    checkOut: {type: Date},
+    checkIn: {type: String},
+    checkOut: {type: String},
     total: {type: Number}
     }, {timestamps: true});
 

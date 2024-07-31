@@ -615,8 +615,9 @@ html, body {
 
 .confirmation-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 20px;
+  height: 600px;
 }
 
 .confirmation-message, .summary-container {
@@ -709,3 +710,30 @@ html, body {
 .payment-details p {
   margin: 5px 0;
 }
+
+.dateItem{
+color: rgb(70, 70, 70);
+font-weight: 700;
+margin: 0 40px;
+}
+
+.dashboard{
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  margin: 15px;
+  }
+
+  .bookings-card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5%;
+  margin: 15px;
+    }
+
+    .video-section{
+
+    margin: 15px;
+    background-color: #a0c0c9;
+      }

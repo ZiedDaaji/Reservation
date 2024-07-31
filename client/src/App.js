@@ -19,7 +19,7 @@ function App() {
       <Route path='/' element={<Home/>} />
             <Route path='/register' element={<Register/>} />
             <Route path='/login' element={<Login/>} />
-            <Route path='/homePage/Profile' element={<EditProfile/>} />
+            <Route path='/homePage/Profile/:id' element={<EditProfile/>} />
             <Route path='/homePage' element={<HomePage/>}></Route>
             <Route path='/homePage/:hotelId/Reservation' element={<BookingForm/>} />
             <Route path='/reservation/confirmation/done' element={<Confirmation/>} />

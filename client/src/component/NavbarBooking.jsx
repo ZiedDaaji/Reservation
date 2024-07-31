@@ -93,7 +93,7 @@ const NavbarBooking = () => {
                             {menuDropdownVisible && (
                                 <div className="dropdown-menu show">
                                     <a href="/homePage/Profile" className="dropdown-item">Profile</a>
-                                    <a href="/my-trips" className="dropdown-item">My trips</a>
+                                    <a href="/dashbord" className="dropdown-item">My trips</a>
                                 </div>
                             )}
                         </div>

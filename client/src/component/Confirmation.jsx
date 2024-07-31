@@ -3,6 +3,7 @@ import {  useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import NavbarConfirm from './NavbarConfirm';
+import Footer from './Footer';
 
 const Confirmation = () => {
   const { id } = useParams();
@@ -48,6 +49,7 @@ const Confirmation = () => {
         </div>
       
       </div>
+      <Footer />
     </div>
   );
 };

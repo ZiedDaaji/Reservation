@@ -30,6 +30,8 @@ const Login = () => {
                 console.log(res.data.user)
                 Cookies.set('FN', (res.data.user.firstname), {expiresIn: '2h'});
                 Cookies.set('LN', (res.data.user.lastname), {expiresIn: '2h'});
+                Cookies.set('id', (res.data.user._id), {expiresIn: '2h'});
+                Cookies.set('email', (res.data.user.email), {expiresIn: '2h'});
                 navigate('/HomePage');
             })
             .catch(err => {

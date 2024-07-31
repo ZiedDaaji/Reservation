@@ -4,7 +4,9 @@ import axios from 'axios';
 import NavbarConnected from './NavbarConnected';
 import Footer from './Footer';
 import { Link } from 'react-router-dom';
-import '../App.css'
+import { useParams } from 'react-router-dom';
+import '../App.css';
+import Cookies from 'js-cookie';
 
 
 
@@ -17,9 +19,10 @@ const EditProfile = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-
+    
     const navigate = useNavigate();
     const [allUsers, setAllUsers] = useState([]);
+    const id = Cookies.get('id');
     
   
     useEffect(() =>{
@@ -33,10 +36,29 @@ const EditProfile = () => {
             })
         }, []);
 
+        useEffect(() => {
+            axios.get("http://localhost:8000/api/users/" + id)
+            .then((res) => {
+                console.log(res.data);
+                console.log(res.data._id);
+                setFirstname(res.data.firstname);
+                setLastname(res.data.lastname);
+                setEmail(res.data.email);
+                setPhonenumber(res.data.phonenumber);
+                setPassword(res.data.password);
+                setConfirmPassword(res.data.confirmPassword);
+                
+            })
+            .catch((err) => {
+                console.log(err)
+                console.log('nok')
+            })
+            
+          }, [id])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put("http://localhost:8000/api/users", { firstname, lastname, email, phonenumber, password, confirmPassword })
+        axios.patch("http://localhost:8000/api/users/"+id, { firstname, lastname, email, phonenumber, password, confirmPassword })
             .then(res => {
                 console.log(res.data);
                 setFirstname('');
@@ -45,12 +67,15 @@ const EditProfile = () => {
                 setPhonenumber('');
                 setPassword('');
                 setConfirmPassword('');
+                Cookies.set('FN', (firstname), {expiresIn: '2h'});
+                Cookies.set('LN', (lastname), {expiresIn: '2h'});
                 navigate('/HomePage');
             })
             .catch(err => {
                 const errorResponse = err.response?.data?.errors || {};
                 const errorArr = Object.values(errorResponse).map(error => error.message);
                 setError(errorArr);
+                console.log(err)
             });
     };
 
@@ -66,7 +91,7 @@ const EditProfile = () => {
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="first-name">First Name:</label>
-                                        <input type="text" className="form-control" id="first-name" name="firstname" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+                                        <input type="text" className="form-control"  name="firstname"  onChange={(e) => setFirstname(e.target.value)} value={firstname} />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="last-name">Last Name:</label>
