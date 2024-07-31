@@ -1,69 +1,196 @@
-import React, { useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import NavbarConnected from './NavbarConnected';
+import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import user from '../icons/user.jpg';
+import smile from '../icons/smile.jpg';
+import search from '../icons/search.png';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const EditBooking = () => {
-  const { hotelId } = useParams();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { nights: initialNights, adults: initialAdults, kids: initialKids } = location.state;
-  const [formData, setFormData] = useState({
-    nights: initialNights,
-    adults: initialAdults,
-    kids: initialKids,
-  });
+    const [checkInDate, setCheckInDate] = useState(null);
+    const [checkOutDate, setCheckOutDate] = useState(null);
+    const [location, setLocation] = useState(null);
+    const navigate = useNavigate();
+    const [whoDropdownVisible, setWhoDropdownVisible] = useState(false);
+    const [menuDropdownVisible, setMenuDropdownVisible] = useState(false);
+    const [counts, setCounts] = useState({
+        adults: 0,
+        children: 0,
+        infants: 0,
+    });
+    const [allUsers, setAllUsers] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: Number(value) }));
-  };
+    useEffect(() =>{
+      axios.get('http://localhost:8000/api/AllUsers', {withCredentials: true})
+      .then((res) => {
+          setAllUsers(res.data);
+  
+      })
+      .catch((err) => {
+          console.log(err);
+          navigate('/Login');
+      })
+  }, []);
+    const userFN = Cookies.get('FN');
+    const userLN = Cookies.get('LN');
+    const id = Cookies.get('id');
+    const userId = `${userFN + " " + userLN}`
 
-  const handleSave = () => {
-    console.log('Booking details updated:', formData);
-    navigate(`${hotelId}/reservation/`, { state: { ...formData } });
-  };
 
-  const handleCancel = () => {
-    navigate(`${hotelId}/reservation/`, { state: { nights: initialNights, adults: initialAdults, kids: initialKids } });
-  };
+    const toggleWhoDropdown = () => {
+        setWhoDropdownVisible(!whoDropdownVisible);
+    };
 
-  return (
-    <div className="home">
-      <NavbarConnected />
-      <div className="edit-booking">
-        <h2>Edit Booking Details</h2>
-        <label>
-          Nights:
-          <input
-            type="number"
-            name="nights"
-            value={formData.nights}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Adults:
-          <input
-            type="number"
-            name="adults"
-            value={formData.adults}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Kids:
-          <input
-            type="number"
-            name="kids"
-            value={formData.kids}
-            onChange={handleChange}
-          />
-        </label>
-        <button onClick={handleSave}>Save</button>
-        <button onClick={handleCancel}>Cancel</button>
-      </div>
-    </div>
-  );
-};
+    const toggleMenuDropdown = () => {
+        setMenuDropdownVisible(!menuDropdownVisible);
+    };
+
+    const handleIncrement = (type) => {
+        setCounts((prevCounts) => ({
+            ...prevCounts,
+            [type]: prevCounts[type] + 1,
+        }));
+    };
+
+    const handleDecrement = (type) => {
+        setCounts((prevCounts) => ({
+            ...prevCounts,
+            [type]: Math.max(0, prevCounts[type] - 1),
+        }));
+    };
+
+    const cookieSet = () => {
+        
+        Cookies.set('dataIn', (checkInDate), {expiresIn: '2h'});
+        Cookies.set('dataOut', (checkOutDate), {expiresIn: '2h'});
+        Cookies.set('dataAdultd', (counts.adults), {expiresIn: '2h'});
+        Cookies.set('dataChildren', (counts.children), {expiresIn: '2h'});
+        Cookies.set('dataInfant', (counts.infants), {expiresIn: '2h'});
+        navigate(-1)
+        
+    };
+
+
+    const logOut = () => {
+        axios.post('http://localhost:8000/api/logout', {}, {withCredentials: true})
+        .then((res) => {
+            console.log(res);
+            Cookies.remove('FN');
+            Cookies.remove('LN');
+            Cookies.remove('dataIn');
+            Cookies.remove('dataOut');
+            Cookies.remove('dataAdultd');
+            Cookies.remove('dataChildren');
+            Cookies.remove('dataInfant');
+            Cookies.remove('dataLoc');
+            Cookies.remove('id');
+            Cookies.remove('email');
+            navigate("/");
+        })
+        .catch((err) => {
+            console.log(err); 
+        })
+    }
+
+    return (
+        <header className="custom-header py-2">
+            <div className="container">
+                <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex flex-column align-items-start">
+                        <div className="d-flex align-items-center">
+                            <img src={smile} alt="Logo" width="30" className="mr-2" />
+                            <Link to={`/homePage`} className='site-title' ><span  >Reservation.com</span></Link>
+                        </div>
+                        <span className="welcome-message">Welcome {userId}!</span>
+                    </div>
+                    <div className="d-flex align-items-center">
+                        <span className="mr-3">
+                            <select className="form-control">
+                                <option value="" disabled selected>💵 Devise</option>
+                                <option value="Tunis">TND</option>
+                                <option value="Hammamet">USD $</option>
+                                <option value="Sousse">EUR €</option>
+                            </select>
+                        </span>
+                        <a href="/aboutUs" className="nav-link custom-margin p-0">About Us</a>
+                        <button className="btn btn-outline-light ml-3 login-btn custom-margin" onClick={logOut}>
+                            LogOut
+                            <img src={user} alt="Icon" width="20" className="ml-2" />
+                        </button>
+                        <div className="dropdown custom-margin">
+                            <button className="btn btn-outline-light dropdown-toggle" onClick={toggleMenuDropdown}>
+                                Plus
+                            </button>
+                            {menuDropdownVisible && (
+                                <div className="dropdown-menu show">
+                                    <a href={`/homePage/Profile/${id}`} className="dropdown-item">Profile</a>
+                                    <a href="/dashbord" className="dropdown-item">My trips</a>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className="row justify-content-center mt-3">
+                    <div className="col-md-10">
+                        <div className="search-bar-container">
+                            <div className="search-bar">
+                                <div className="input-group">
+                                    
+                                    <div className='dateItem'>Check In<input type='date' className="form-control"  onChange={(e) => setCheckInDate(e.target.value)} placeholder="Check In" /></div>
+                                    <div className='dateItem'>Check Out<input type='date' className="form-control"  onChange={(e) => setCheckOutDate(e.target.value)} placeholder="Check Out" /></div>
+                                    <div className="form-control" onClick={toggleWhoDropdown} style={{ cursor: 'pointer' }}>
+                                        Who
+                                    </div>
+                                    {whoDropdownVisible && (
+                                        <div className="dropdown-menu show">
+                                            <div className="dropdown-item d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    Adults<br /><small>Age 13+</small>
+                                                </div>
+                                                <div>
+                                                    <button className="btn btn-sm btn-secondary" onClick={() => handleDecrement('adults')}>-</button>
+                                                    <span className="mx-2">{counts.adults}</span>
+                                                    <button className="btn btn-sm btn-secondary" onClick={() => handleIncrement('adults')}>+</button>
+                                                </div>
+                                            </div>
+                                            <div className="dropdown-item d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    Children<br /><small>Age 2-13</small>
+                                                </div>
+                                                <div>
+                                                    <button className="btn btn-sm btn-secondary" onClick={() => handleDecrement('children')}>-</button>
+                                                    <span className="mx-2">{counts.children}</span>
+                                                    <button className="btn btn-sm btn-secondary" onClick={() => handleIncrement('children')}>+</button>
+                                                </div>
+                                            </div>
+                                            <div className="dropdown-item d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    Infants<br /><small>Age 2 & under</small>
+                                                </div>
+                                                <div>
+                                                    <button className="btn btn-sm btn-secondary" onClick={() => handleDecrement('infants')}>-</button>
+                                                    <span className="mx-2">{counts.infants}</span>
+                                                    <button className="btn btn-sm btn-secondary" onClick={() => handleIncrement('infants')}>+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="input-group-append">
+                                        <button className="btn btn-primary" type="button">
+                                            <img src={search} alt="Search"  onClick={() => cookieSet()} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
+}
 
 export default EditBooking;

@@ -169,6 +169,7 @@ const BookingForm = () => {
             <div className="hotel-header">
               <span className="hotel-name">{hotel.name}</span>
               <span className="hotel-rating">{hotel.rate}</span>
+              <a href="/homePage/Reservation/edit">Edit</a>
             </div>
             <div className="hotel-location">{hotel.location}</div>
             <div className="check-in-out">
